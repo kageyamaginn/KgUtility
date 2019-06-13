@@ -5,18 +5,19 @@ namespace Test_Plan
 {
     class Program
     {
+        delegate void Del(string filename);
+        public static void DeleteFile(string filename) {  }
         static void Main(string[] args)
         {
+            Del delfilehan = DeleteFile;
             Plan.Create.
-                Set("").
-                When("result='app'").
-                Do("").
+                Set(new PlanSettings()).
+                IfContinue((ojb) => { return false; }).
+                Do((reg)=> { }).
+                Sql(null, "", null).
                 Start();
         }
 
-        static void TestMethod()
-        {
 
-        }
     }
 }

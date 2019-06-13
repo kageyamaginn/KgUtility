@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace Kg.Plan
 {
@@ -11,12 +12,20 @@ namespace Kg.Plan
 
         public static Plan Create
         {
-            get { return new Plan(); }
+            get { return new Plan() { }; }
+        }
+
+        public Plan()
+        {
+            Items = new List<PlanItem>();
+            Results = new PlanItemResultCollection();
+            Exceptions = new List<Exception>();
         }
 
         public void Start()
         {
-            for (int itemindex = Items.FindLastIndex(i=> {return i is SetPlanItem; })+1/*start from first executable item*/ ; itemindex < Items.Count; itemindex++)
+            ValidatePlanItems();
+            for (int itemindex = 0; itemindex < Items.Count; itemindex++)
             {
                 try
                 {
@@ -24,9 +33,9 @@ namespace Kg.Plan
                     if (curr is IfContinuePlanItem)//如果当前类型是ifcontinue，执行判断方法，如果返回为false，中断执行队列，并插入一条exception。
                     {
                         var resultColl= (curr as IfContinuePlanItem).Run();
-                        if (!(bool)resultColl[curr, 0].Result)
+                        if (!(bool)resultColl[curr, -1].Result)
                         {
-                            this.Exceptions.Add(new Exception("programmed break; reason:" + resultColl[curr, 1].Result.ToString()));//ifcontinue返回的结果第二条为终止原因
+                            this.Exceptions.Add(new Exception("programmed break; reason:" + resultColl[curr, 1].Result.ToString()));//ifcontinue返回的结果第1条为终止原因
                         break;
                         }
                         
@@ -36,6 +45,10 @@ namespace Kg.Plan
                 catch (Exception ex)
                 {
                     this.Exceptions.Add(ex);
+                    if (Settings.BreakWhenException)
+                    {
+                        break;
+                    }
                     
                 }
                 
@@ -51,22 +64,16 @@ namespace Kg.Plan
         public List<Exception> Exceptions { get; set; }
         public PlanItemResultCollection Results { get; set; }
 
-        public delegate void RegisterResult(string resultName, object data);
+        
 
         /// <summary>
         /// to validate if the plan items is legal
         /// </summary>
-        public void ValidatePlanItems()
+        protected void ValidatePlanItems()
         {
-            bool settingsFinish = false;
             for (int itemIndex = 0; itemIndex < this.Items.Count; itemIndex++)
             {
                 PlanItem curr = Items[itemIndex];
-
-                if (itemIndex == 0 && !(curr is SetPlanItem)) { new PlanItemNotValidException("the first item must be typeof SetPlanItem. for setting plan."); }
-                if (settingsFinish == false && !(curr is SetPlanItem)) { settingsFinish = true; }
-                if (settingsFinish && curr is SetPlanItem) { new PlanItemNotValidException("settings must set before any executable items"); }
-
                 var exception = curr.Valid();
                 if (exception != null)
                 {
@@ -75,142 +82,59 @@ namespace Kg.Plan
             }
         }
 
-        
-        
-    }
-    public class PlanItemNotValidException : Exception
-    {
-        public PlanItemNotValidException(String content) { }
     }
 
-
-    public abstract class  PlanItem : IExecutable
+    public class SchedulePlan : Plan
     {
-        public abstract PlanItemResultCollection Run();
-        public abstract PlanItemNotValidException Valid();
-
-        public Plan Parent { get; set; }
-
-    }
-
-    public class PlanItemResult
-    {
-        public PlanItemResult(PlanItem item, int itemIndex)
+        Timer sch = null;
+        bool IsAsync = false;
+        public SchedulePlan(int millisecond,bool IsAsync=false)
         {
-            this.Item = item;
-            this.ItemIndex = ItemIndex;
+            this.IsAsync = IsAsync;
+            sch = new Timer();
+            sch.Interval = millisecond;
+            sch.Elapsed += Sch_Elapsed;
+        }
+        public String Status { get; set; }
+        public void BeginSchedule()
+        {
+            Status = "Starting";
+            this.Start();
+            sch.Start();
+            Status = "Running";
         }
 
-        public string ResultName { get; set; }
-        public int ItemIndex { get;  }
-        public PlanItem Item { get; }
-        public object Result { get; set;}
-
-    }
-
-    public class BooleanPlanItemResult : PlanItemResult
-    {
-        public BooleanPlanItemResult(PlanItem item, int itemindex) : base(item, itemindex) { }
-        public new bool Result { get; set; }
-    }
-
-    public class PlanItemResultCollection : List<PlanItemResult>
-    {
-        public List<PlanItemResult> this[PlanItem item]
+        public void EndSchedule()
         {
-            get { return this.FindAll(i => i.Item == item); }
+            Status = "Stoping";
+            sch.Stop();
+            Status = "Stoped";
         }
 
-        public PlanItemResult this[PlanItem item, int index]
+        private void Sch_Elapsed(object sender, ElapsedEventArgs e)
         {
-            get
+            if (IsAsync)
             {
-                var results = this[item];
-                if (results.Count == 0||index<0||index>results.Count-1) return null;
-                return results[index];
+                this.StartAsync();
+            }
+            else
+            {
+                this.Start();
             }
         }
+
+        new public static SchedulePlan Create(int millisecond, bool IsAsync = false)
+        {
+            return new SchedulePlan(millisecond, IsAsync);
+        }
     }
 
-    public class IfContinuePlanItem : PlanItem
+    public class EventPlan : Plan
     {
-        public delegate bool IfContinuePlanItemHandle(object state);
-        public IfContinuePlanItemHandle Action { get; set; }
-        public IfContinuePlanItem(IfContinuePlanItemHandle ifAction)
-        {
-            
-        }
-        public override PlanItemResultCollection Run()
-        {
-            return this.Parent.Results;
-        }
-
-        public override PlanItemNotValidException Valid()
-        {
-            throw new NotImplementedException();
-        }
-    }
-    public class AfterPlanItem : PlanItem
-    {
-        public override PlanItemResultCollection Run()
-        {
-            return this.Parent.Results;
-        }
-
-        public override PlanItemNotValidException Valid()
-        {
-            throw new NotImplementedException();
-        }
-    }
-    public class SetPlanItem : PlanItem
-    {
-        public override PlanItemResultCollection Run()
-        {
-            return this.Parent.Results;
-        }
-
-        public override PlanItemNotValidException Valid()
-        {
-            throw new NotImplementedException();
-        }
     }
 
-    public class DoPlanItem : PlanItem
-    {
-        public DoPlanItem(DoPlanItemHandle action)
-        {
-            this.action = action;
-        }
-
-        public delegate void DoPlanItemHandle(Plan.RegisterResult reg);
-        DoPlanItemHandle action { get; set; }
-
-        public override PlanItemResultCollection Run()
-        {
-
-            return this.Parent.Results;
-        }
-
-        public override PlanItemNotValidException Valid()
-        {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class SqlPlanItem : DoPlanItem
-    {
-        public SqlPlanItem(DoPlanItemHandle action):base(action)
-        {
-
-        }
-        new public PlanItemResultCollection Run()
-        {
-            return this.Parent.Results;
-        }
-    }
-
-
-
+   
+ 
     public class PlanSettings
     {
         public bool IsDynamic { get; set; }

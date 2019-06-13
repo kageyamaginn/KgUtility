@@ -8,7 +8,7 @@ namespace Kg.Plan
     {
         public static Plan IfContinue(this Plan source, IfContinuePlanItem.IfContinuePlanItemHandle ifAction)
         {
-            source.Items.Add(new IfContinuePlanItem(ifAction));
+            source.Items.Add(new IfContinuePlanItem(ifAction,source));
             return source;
         }
 
@@ -32,13 +32,15 @@ namespace Kg.Plan
             return source;
         }
         /// <summary>
-        /// config behavior of plan
+        /// <para>config behavior of plan</para>
+        /// <para>设置plan的行为</para>
         /// </summary>
         /// <param name="source"></param>
         /// <param name="settings"></param>
         /// <returns></returns>
         public static Plan Set(this Plan source, PlanSettings settings)
         {
+            source.Settings = settings;
             return source;
         }
 
@@ -48,9 +50,9 @@ namespace Kg.Plan
         /// <param name="source"></param>
         /// <param name="action">the method be invoked in the plan , you can use the register parameter to store result in plan.</param>
         /// <returns></returns>
-        public static Plan Do(this Plan source, DoPlanItem.DoPlanItemHandle action)
+        public static Plan Do(this Plan source, DoPlanItem.DoPlanItemHandle action, object[] parameters=null)
         {
-            source.Items.Add(new DoPlanItem(action));
+            source.Items.Add(new DoPlanItem(action,source,parameters));
             return source;
         }
         

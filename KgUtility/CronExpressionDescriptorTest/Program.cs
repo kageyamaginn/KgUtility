@@ -1,14 +1,14 @@
 ﻿using System;
 using CronExpressionDescriptor;
 using Quartz;
-using Quartz.
+
 namespace CronExpressionDescriptorTest
 {
     class Program
     {
         static void Main(string[] args)
         {
-            
+           
         }
 
         static void ExplainCronExpress()

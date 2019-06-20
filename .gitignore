@@ -14,3 +14,6 @@ KgUtility/Kg.Db/obj/
 KgUtility/Kg.Develop/obj/Debug/netstandard2.0/Kg.Develop.AssemblyInfoInputs.cache
 KgUtility/Kg.Develop/obj/
 KgUtility/Kg.IO/obj/
+KgUtility/Pei.Data.Sqlite/bin/
+KgUtility/Pei.Data.Sqlite/obj/
+KgUtility/Kg.Data.Cache/obj/

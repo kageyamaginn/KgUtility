@@ -5,3 +5,12 @@ KgUtility/Test_Plan/bin/
 KgUtility/Test_Plan/obj/
 KgUtility/CronExpressionDescriptorTest/obj/
 KgUtility/CronExpressionDescriptorTest/bin/Debug/
+KgUtility/Kg.Common.Cache/obj/Kg.Common.Cache.csproj.nuget.cache
+KgUtility/Kg.Common.Cache/obj/Debug/netstandard2.0/Kg.Common.Cache.AssemblyInfo.cs
+KgUtility/Kg.Common.Cache/obj/Debug/netstandard2.0/Kg.Common.Cache.csprojAssemblyReference.cache
+KgUtility/Kg.Common.Cache/obj/Debug/netstandard2.0/Kg.Common.Cache.csproj.CoreCompileInputs.cache
+KgUtility/Kg.Db.Oracle/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+KgUtility/Kg.Db/obj/
+KgUtility/Kg.Develop/obj/Debug/netstandard2.0/Kg.Develop.AssemblyInfoInputs.cache
+KgUtility/Kg.Develop/obj/
+KgUtility/Kg.IO/obj/

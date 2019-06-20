@@ -1,0 +1,64 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\hanha1\\Desktop\\KgUtility\\KgUtility\\Kg.Common.Cache\\Kg.Common.Cache.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\hanha1\\Desktop\\KgUtility\\KgUtility\\Kg.Common.Cache\\Kg.Common.Cache.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\hanha1\\Desktop\\KgUtility\\KgUtility\\Kg.Common.Cache\\Kg.Common.Cache.csproj",
+        "projectName": "Kg.Common.Cache",
+        "projectPath": "C:\\Users\\hanha1\\Desktop\\KgUtility\\KgUtility\\Kg.Common.Cache\\Kg.Common.Cache.csproj",
+        "packagesPath": "C:\\Users\\hanha1\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\hanha1\\Desktop\\KgUtility\\KgUtility\\Kg.Common.Cache\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Microsoft\\Xamarin\\NuGet\\",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\hanha1\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\nodejs\\node_modules\\npm\\lib": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://plmtest.pery.com/PBD/nuget": {}
+        },
+        "frameworks": {
+          "netstandard2.0": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "dependencies": {
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,6 @@
+C:\Users\hanha1\Desktop\KgUtility\KgUtility\Kg.Data.Cache\bin\Debug\netstandard2.0\Kg.Data.Cache.deps.json
+C:\Users\hanha1\Desktop\KgUtility\KgUtility\Kg.Data.Cache\bin\Debug\netstandard2.0\Kg.Data.Cache.dll
+C:\Users\hanha1\Desktop\KgUtility\KgUtility\Kg.Data.Cache\obj\Debug\netstandard2.0\Kg.Data.Cache.csprojAssemblyReference.cache
+C:\Users\hanha1\Desktop\KgUtility\KgUtility\Kg.Data.Cache\obj\Debug\netstandard2.0\Kg.Data.Cache.csproj.CoreCompileInputs.cache
+C:\Users\hanha1\Desktop\KgUtility\KgUtility\Kg.Data.Cache\obj\Debug\netstandard2.0\Kg.Data.Cache.AssemblyInfoInputs.cache
+C:\Users\hanha1\Desktop\KgUtility\KgUtility\Kg.Data.Cache\obj\Debug\netstandard2.0\Kg.Data.Cache.AssemblyInfo.cs

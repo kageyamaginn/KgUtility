@@ -9,6 +9,7 @@ namespace Kg.Data.Cache
         public string Name { get; set; }
         public int Version { get; set; }
         public ICacheStrategy[] Strategies { get; set; }
+         
         public List<ModuleCache> Caches { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Kg.Data.Cache
@@ -13,7 +14,7 @@ namespace Kg.Data.Cache
     {
         public CacheItem()
         {
-            Indexes = new List<string>();
+            Indexes = new CacheIndexCollection(); 
         }
         /// <summary>
         /// 缓存管理Id
@@ -30,7 +31,8 @@ namespace Kg.Data.Cache
         /// <summary>
         /// 缓存数据的状态
         /// </summary>
-        public CacheItemState State { get; set; }
+        public CacheItemState CacheState { get; set; }
+       
         /// <summary>
         /// 根据缓存策略更新缓存失效的时间
         /// </summary>
@@ -40,7 +42,7 @@ namespace Kg.Data.Cache
         /// </summary>
         public void Abandon()
         {
-            State = CacheItemState.Abandoned;
+            CacheState = CacheItemState.Abandoned;
         }
         /// <summary>
         /// 延迟抛弃缓存的任务实例
@@ -59,7 +61,7 @@ namespace Kg.Data.Cache
             DelayAbandonTask= new Task(()=> 
             {
                 System.Threading.Thread.Sleep(delay * 1000);
-                State = CacheItemState.Abandoned;
+                CacheState = CacheItemState.Abandoned;
             });
             DelayAbandonTask.Start();
             
@@ -68,7 +70,7 @@ namespace Kg.Data.Cache
         /// <summary>
         /// 缓存的索引， 程序使用这个list来判断是否命中索引
         /// </summary>
-        private List<String> Indexes { get; set; }
+        private CacheIndexCollection Indexes { get; set; }
 
     }
     /// <summary>
@@ -85,5 +87,51 @@ namespace Kg.Data.Cache
         /// </summary>
         Abandoned
 
+    }
+
+    public class CacheIndex
+    {
+        public CacheIndex(string property, string value)
+        {
+            this.Property = property;
+            this.Value = value;
+
+        }
+        public string Property { get; set; }
+        public string Value { get; set; }
+    }
+
+    public class CacheIndexCollection:List<CacheIndex>
+    {
+        public List<CacheIndex> this[string property]
+        {
+            get
+            {
+                return this.FindAll(ci => ci.Property == property);
+            }
+        }
+
+        public List<CacheIndex> this[params string[] values]
+        {
+            get
+            {
+                List<CacheIndex> results = new List<CacheIndex>();
+                foreach (String v in values)
+                {
+                    results.AddRange( this.FindAll(ci => ci.Value == v));
+                }
+
+                return results;
+            }
+        }
+
+
+        public CacheIndex this[string property, string value]
+        {
+            get
+            {
+                return this.Find(ci => ci.Property == property && ci.Value == value);
+            }
+        }
     }
 }

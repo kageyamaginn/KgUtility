@@ -11,7 +11,7 @@ namespace Kg.Data.Cache
         /// 原始的数据
         /// </summary>
         public T Data { get; set; }
-        public ICacheStrategy Strategy { get; set; }
+        public ICacheExpiryStrategy Strategy { get; set; }
         
         /// <summary>
         /// 被json序列化后的数据

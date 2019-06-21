@@ -17,3 +17,6 @@ KgUtility/Kg.IO/obj/
 KgUtility/Pei.Data.Sqlite/bin/
 KgUtility/Pei.Data.Sqlite/obj/
 KgUtility/Kg.Data.Cache/obj/
+KgUtility/FileLock/bin/
+KgUtility/FileLock/obj/
+KgUtility/Kg.Data.Cache.Test/obj/

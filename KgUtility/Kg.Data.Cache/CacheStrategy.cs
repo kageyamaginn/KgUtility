@@ -7,7 +7,7 @@ namespace Kg.Data.Cache
     /// <summary>
     /// 配置信息： 缓存失效（固定日期失效）
     /// </summary>
-    public class PriodCacheStrategy: ICacheStrategy
+    public class PriodCacheStrategy: ICacheExpiryStrategy
     {
         /// <summary>
         ///指定数据失效的时间长度millonsecond 
@@ -35,8 +35,9 @@ namespace Kg.Data.Cache
         }
 
     }
+    
 
-    public interface ICacheStrategy
+    public interface ICacheExpiryStrategy
     {
         /// <summary>
         /// 根据缓存策略，更新cache条目

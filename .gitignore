@@ -20,3 +20,11 @@ KgUtility/Kg.Data.Cache/obj/
 KgUtility/FileLock/bin/
 KgUtility/FileLock/obj/
 KgUtility/Kg.Data.Cache.Test/obj/
+KgUtility/Kg.Db.Oracle/bin/
+KgUtility/CacheTest/bin/
+KgUtility/CacheTest/obj/
+KgUtility/Kg.Data.Cache/bin/
+KgUtility/Kg.Db.Oracle/obj/
+KgUtility/Kg.IO/bin/Debug/netstandard2.0/Kg.IO.deps.json
+KgUtility/UploadFile/bin/
+KgUtility/UploadFile/obj/

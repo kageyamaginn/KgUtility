@@ -2,6 +2,17 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <Company>Kageyamaginn</Company>
+    <Authors>Kageyamaginn</Authors>
+    <Version>1.2.0</Version>
+    <Description>一个个人写的应用程序Cache小架构。
+支持数据，文件的简单缓存管理。
+包括，缓存的下载， 清除。</Description>
+    <NeutralLanguage>zh-Hans</NeutralLanguage>
+    <AssemblyVersion>1.2.0.0</AssemblyVersion>
+    <FileVersion>1.2.0.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

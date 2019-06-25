@@ -1,10 +1,12 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace Kg.Data.Cache
 {
-    public class ApplicationCache:IDisposable
+    public class ApplicationCache : IDisposable
     {
         /// <summary>
         /// 是应用程序的名称，该名称用于缓存的数据层级。
@@ -15,6 +17,7 @@ namespace Kg.Data.Cache
         /// 如果可以保证各个版本之间数据结构兼容的情况下，可以忽略此属性。
         /// </summary>
         public int Version { get; set; }
+       
         /// <summary>
         /// 应用程序级的缓存清理策略
         /// </summary>
@@ -23,14 +26,31 @@ namespace Kg.Data.Cache
         /// 应用程序级数据缓存策略（允许多个策略并存）
         /// </summary>
         public DataCacheStrategy[] DataStrategies { get; set; }
-        
+
         public void Dispose()
         {
-            throw new NotImplementedException();
+
         }
 
+        public delegate void CacheAppInitializeHandle();
+        public CacheAppInitializeHandle InitializeHandle { get; set; }
         public void Initialize()
         {
+            if (InitializeHandle != null)
+            { InitializeHandle(); }
+            CheckMainDb();
+        }
+        /// <summary>
+        /// 检查缓存的sqlite db是否存在。如果不存在的话，创建。
+        /// </summary>
+        private void CheckMainDb()
+        {
+            Db.Ini(()=> {
+                Db.SysDb.CreateTable<ApplicationCache>();
+                Db.SysDb.CreateTable<CacheLog>();
+                Db.SysDb.CreateTable<CacheItem>();
+            });
+            
         }
     }
 }

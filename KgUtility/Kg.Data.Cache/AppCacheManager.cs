@@ -10,6 +10,9 @@ namespace Kg.Data.Cache
     /// </summary>
     public class AppCacheManager
     {
+       /// <summary>
+       ///初始化ApplicationCache子系统
+       /// </summary>
         public static void Initialize()
         {
             CacheEntities = new List<ApplicationCache>();
@@ -17,13 +20,20 @@ namespace Kg.Data.Cache
 
         static List<ApplicationCache> CacheEntities { get; set; }
 
-        public static void Register(ApplicationCache cacheItem)
+        /// <summary>
+        ///将AppCache的配置加载到Cache系统当中
+        /// </summary>
+        /// <param name="app"></param>
+        public static void Register(ApplicationCache app)
         {
-            CacheEntities.Add(cacheItem);
-            cacheItem.Initialize();
+            CacheEntities.Add(app);
+            app.Initialize();
             
         }
-
+        /// <summary>
+        /// 将Cache配置从cache系统中移除
+        /// </summary>
+        /// <param name="cacheitem"></param>
         public static void Unregister(ApplicationCache cacheitem)
         {
             CacheEntities.Remove(cacheitem);
